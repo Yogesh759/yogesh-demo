@@ -203,7 +203,7 @@ Array.from(document.getElementsByClassName('playListPlay')).forEach((e) => {
        });
 
        songTitles.forEach(elss => {
-            let { songName, poster} = elss;
+            let { songName, poster } = elss;
             title.innerHTML = songName;
             poster_master_play.src = poster;
        });
@@ -225,75 +225,131 @@ let seek = document.getElementById('seek');
 let bar2 = document.getElementById('bar2');
 let dot = document.getElementsByClassName('dot')[0];
 
-music.addEventListener('timeupdate', ()=>{
+// music.addEventListener('timeupdate', () => {
+//     let music_curr = music.currentTime;
+//     let music_dur = music.duration;
+//     //console.log(music_dur);
+
+//     let min1 = math.floor(music_dur / 60);
+//     let sec1 = math.floor(music_dur % 60);
+//     //console.log(music_dur);
+
+//     if(sec1 < 10){
+//         sec1 = `0${sec1}`
+
+//     }
+//     //currentStart.innerText = `$`
+//     currentEnd.innerText = `${min1}:${sec1}`;
+
+//     let min2 = Math.floor(music_curr / 60);
+//     let sec2 = Math.floor(music_curr % 60);
+
+//     if(sec2 < 10){
+//         sec2 = `0${sec2}`;
+
+//     }
+
+//     currentStart.innerText = `${min2}:${sec2}`;
+
+//     let progressBar = parseInt((music_curr / music_dur) * 100);
+//     // console.log(seek.value);
+//     seek.value = progressBar;
+//     let seekbar = seek.value;
+//     bar2.style.width = `${seekbar}%`;
+//     dot.style.left = `${seekbar}%`;
+
+
+
+// });
+// ...
+
+music.addEventListener('timeupdate', () => {
     let music_curr = music.currentTime;
     let music_dur = music.duration;
-    //console.log(music_dur);
 
-    let min1 = math.floor(music_dur / 60);
-    let sec1 = math.floor(music_dur % 60);
-    //console.log(music_dur);
+    let min1 = Math.floor(music_dur / 60);
+    let sec1 = Math.floor(music_dur % 60);
 
-    if(sec1 < 10){
-        sec1 = `0${sec1}`
-
+    if (sec1 < 10) {
+        sec1 = `0${sec1}`;
     }
-    //currentStart.innerText = `$`
+
     currentEnd.innerText = `${min1}:${sec1}`;
 
     let min2 = Math.floor(music_curr / 60);
     let sec2 = Math.floor(music_curr % 60);
 
-    if(sec2 < 10){
+    if (sec2 < 10) {
         sec2 = `0${sec2}`;
-
     }
 
     currentStart.innerText = `${min2}:${sec2}`;
 
     let progressBar = parseInt((music_curr / music_dur) * 100);
-    // console.log(seek.value);
     seek.value = progressBar;
     let seekbar = seek.value;
     bar2.style.width = `${seekbar}%`;
     dot.style.left = `${seekbar}%`;
-
-
-
 });
 
-seek.addEventListener('change', ()=> {
-    music.currentTime = seek.value * music.duration / 100;
+seek.addEventListener('change', () => {
+    music.currentTime = (seek.value * music.duration) / 100;
 });
 
-let vol_icon = document.getElementById('vol_icon');
-let vol = document.getElementById('vol');
-let vol_bar = document.getElementById('vol_bar')[0];
-let vol_dot = document.getElementById('vol_dot');
-
-vol.addEventListener('change',()=>{
-    if(vol.value == 0) {
-        vol_icon.classList.remove('bi-volume-up-fill');
-        vol_icon.classList.remove('bi-volume-down-fill');
-        vol_icon.classList.add('bi-volume-off-fill');
-
-    }
-    if(vol.value > 0){
-        vol_icon.classList.remove('bi-volume-up-fill');
-        vol_icon.classList.add('bi-volume-down-fill');
-        vol_icon.classList.remove('bi-volume-off-fill');
-
-    }
-    if(vol.value > 50){
-        vol_icon.classList.add('bi-volume-up-fill');
-        vol_icon.classList.remove('bi-volume-down-fill');
-        vol_icon.classList.remove('bi-volume-off-fill');
-    }
+vol.addEventListener('change', () => {
     let vol_a = vol.value;
     vol_bar.style.width = `${vol_a}%`;
     vol_dot.style.left = `${vol_a}%`;
     music.volume = vol_a / 100;
+
+    if (vol_a == 0) {
+        vol_icon.classList.remove('bi-volume-up-fill');
+        vol_icon.classList.remove('bi-volume-down-fill');
+        vol_icon.classList.add('bi-volume-off-fill');
+    } else if (vol_a > 0 && vol_a <= 50) {
+        vol_icon.classList.remove('bi-volume-up-fill');
+        vol_icon.classList.add('bi-volume-down-fill');
+        vol_icon.classList.remove('bi-volume-off-fill');
+    } else {
+        vol_icon.classList.add('bi-volume-up-fill');
+        vol_icon.classList.remove('bi-volume-down-fill');
+        vol_icon.classList.remove('bi-volume-off-fill');
+    }
 });
+
+
+// seek.addEventListener('change', ()=> {
+//     music.currentTime = seek.value * music.duration / 100;
+// });
+
+// let vol_icon = document.getElementById('vol_icon');
+// let vol = document.getElementById('vol');
+// let vol_bar = document.getElementById('vol_bar')[0];
+// let vol_dot = document.getElementById('vol_dot');
+
+// vol.addEventListener('change',()=>{
+//     if(vol.value == 0) {
+//         vol_icon.classList.remove('bi-volume-up-fill');
+//         vol_icon.classList.remove('bi-volume-down-fill');
+//         vol_icon.classList.add('bi-volume-off-fill');
+
+//     }
+//     if(vol.value > 0){
+//         vol_icon.classList.remove('bi-volume-up-fill');
+//         vol_icon.classList.add('bi-volume-down-fill');
+//         vol_icon.classList.remove('bi-volume-off-fill');
+
+//     }
+//     if(vol.value > 50){
+//         vol_icon.classList.add('bi-volume-up-fill');
+//         vol_icon.classList.remove('bi-volume-down-fill');
+//         vol_icon.classList.remove('bi-volume-off-fill');
+//     }
+//     let vol_a = vol.value;
+//     vol_bar.style.width = `${vol_a}%`;
+//     vol_dot.style.left = `${vol_a}%`;
+//     music.volume = vol_a / 100;
+// });
 
 let back = document.getElementById('back');
 let next = document.getElementById('next');
